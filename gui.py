@@ -1,6 +1,11 @@
 import functions
 import PySimpleGUI as sg
 import time
+import os
+
+if not os.path.exists('todos.txt'):
+    with open("todos.txt", 'w') as file:
+        pass
 
 sg.theme('LightBrown8')
 clock = sg.Text('', key='clock')
@@ -55,7 +60,10 @@ while True:
         case 'Exit':
             break
         case 'todos':
-            window['todo'].update(value=values['todos'][0])
+            try:
+                window['todo'].update(value=values['todos'][0])
+            except IndexError:
+                sg.popup("Enter a todo first!")
         case sg.WINDOW_CLOSED:
             break
 
